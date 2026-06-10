@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="左希蕊的像素风互动简历">
+  <title>Zuo Xirui's Pixel Life</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <section id="landing" class="screen landing">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="visitor-line" id="landingVisitor">LOADING VISITOR...</div>
+    <div class="landing-copy">
+      <p class="eyebrow">PLAYER 01 PRESENTS</p>
+      <h1>ZUO XIRUI'S<br><span>PIXEL LIFE</span></h1>
+      <p class="subtitle">左希蕊的像素人生 · A GAME-STYLE RESUME</p>
+      <button id="startBtn" class="pixel-btn start-btn blink">▶ PRESS START</button>
+      <p class="key-hint">CLICK / ENTER / SPACE</p>
+    </div>
+    <div class="city" aria-hidden="true">
+      <div class="building b1"></div><div class="building b2"></div>
+      <div class="building b3"></div><div class="building b4"></div>
+      <div class="building b5"></div><div class="building b6"></div>
+    </div>
+    <div class="landing-footer">© 2026 ZUO XIRUI · MADE WITH ♥ & PRODUCT THINKING</div>
+  </section>
+
+  <section id="loading" class="screen loading hidden">
+    <div class="loading-box">
+      <div class="walker" aria-hidden="true">▟</div>
+      <p class="loading-title">ENTERING XIRUI'S WORLD...</p>
+      <div class="load-track"><div id="loadBar" class="load-bar"></div></div>
+      <p id="loadPercent">0%</p>
+      <p id="loadMessage" class="load-message">正在唤醒面试官...</p>
+    </div>
+  </section>
+
+  <section id="game" class="game hidden">
+    <header class="topbar">
+      <span>◈ XIRUI.EXE</span>
+      <span id="timeDisplay">00:00:00</span>
+      <span id="visitorDisplay">VISITOR #001</span>
+      <button id="soundBtn" class="mini-btn" aria-label="切换音效">SFX: ON</button>
+    </header>
+
+    <div class="game-layout">
+      <aside class="profile pixel-card">
+        <div class="card-title">PLAYER STATUS</div>
+        <button id="avatar" class="avatar" aria-label="连续点击五次有彩蛋">
+          <span class="hair">██████</span>
+          <span class="face">▮ ◡ ▮</span>
+          <span class="body">▟██▙</span>
+        </button>
+        <div class="identity">
+          <strong>左希蕊 / XIRUI</strong>
+          <span>PRODUCT MANAGER</span>
+          <span>LV.23 · INTJ</span>
+        </div>
+
+        <h3>ATTRIBUTES</h3>
+        <div id="profileStats"></div>
+
+        <h3>EQUIPMENT</h3>
+        <ul class="equipment">
+          <li>⚔ SQL / Python / AI</li>
+          <li>▣ 抗压 · 学习 · 自驱</li>
+          <li>◆ 跨界选手</li>
+        </ul>
+
+        <h3>CURRENT QUEST</h3>
+        <p class="status"><span></span>积极寻找 AI 产品岗位</p>
+        <p class="small">READY IN: 2 WEEKS</p>
+      </aside>
+
+      <main class="map-wrap">
+        <div class="map-head">
+          <div>
+            <p class="eyebrow">WORLD 01</p>
+            <h2>XIRUI'S CAREER MAP</h2>
+          </div>
+          <div class="map-progress">EXPLORED <strong id="exploredCount">0/6</strong></div>
+        </div>
+        <div class="map" id="map">
+          <div class="river river-a"></div><div class="river river-b"></div>
+          <div class="path path-top"></div><div class="path path-mid"></div><div class="path path-bottom"></div>
+          <div class="path path-left-a"></div><div class="path path-left-b"></div>
+          <div class="path path-right-a"></div><div class="path path-right-b"></div>
+          <button class="map-node node-about" data-modal="about"><span>⌂</span><b>关于我</b></button>
+          <button class="map-node node-education" data-modal="education"><span>▰</span><b>学习经历</b></button>
+          <button class="map-node node-work" data-modal="work"><span>▣</span><b>工作经历</b></button>
+          <button class="map-node node-skills" data-modal="skills"><span>⚒</span><b>技能树</b></button>
+          <button class="map-node node-qa" data-modal="qa"><span>?</span><b>Q&A 抽卡</b></button>
+          <button class="map-node node-contact" data-modal="contact"><span>✉</span><b>联系我</b></button>
+          <button id="treasure" class="treasure" aria-label="隐藏的简历宝箱">▣</button>
+          <div class="map-legend">SELECT A LOCATION TO EXPLORE</div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-window pixel-card">
+      <div class="modal-head">
+        <h2 id="modalTitle">NODE</h2>
+        <button id="closeModal" class="mini-btn">X CLOSE</button>
+      </div>
+      <div id="modalContent" class="modal-content"></div>
+    </div>
+  </div>
+
+  <template id="about">
+    <div class="hero-row">
+      <div class="big-avatar">ZX<br><span>PM</span></div>
+      <div><p class="eyebrow">PLAYER PROFILE</p><h3>左希蕊 ZUO XIRUI</h3><p class="quote">“用产品思维，把世界打怪升级。”</p></div>
+    </div>
+    <div class="tags"><span>#INTJ战略家</span><span>#跨界选手</span><span>#AI重度使用者</span></div>
+    <h3>ABOUT THIS PLAYER</h3>
+    <p>23 岁，剑桥大学房地产金融研究型硕士在读，本科毕业于阿姆斯特丹大学经济学（Top 1%）。横跨经济、金融、科技领域，先后在得物、京东、bilibili、蚂蚁、腾讯实习，从增长与搜索策略一路探索到 AI 风控与 AI 产品。</p>
+    <div class="two-col"><div class="note"><b>当前主线</b><br>寻找 AI 方向产品经理岗位（应届）</div><div class="note"><b>关键词</b><br>跨界 · 自驱 · 战略</div></div>
+  </template>
+
+  <template id="education">
+    <div class="timeline">
+      <article><span class="timeline-dot">★</span><p class="eyebrow">CURRENT QUEST</p><h3>剑桥大学</h3><p>University of Cambridge</p><b>房地产金融 · 研究型硕士</b><p class="todo">[TODO: 在读时间 / 研究课题]</p></article>
+      <article><span class="timeline-dot">◆</span><p class="eyebrow">PREVIOUS QUEST</p><h3>阿姆斯特丹大学</h3><p>University of Amsterdam</p><b>经济学与商业经济学 · TOP 1%</b><p class="todo">[TODO: 本科年份 / 关键课程]</p></article>
+    </div>
+    <div class="note"><b>LEARNING LOG</b><br>从“用数据看世界”出发，一路深入金融、产品与 AI。</div>
+  </template>
+
+  <template id="work">
+    <p class="hint">点击经历条目展开任务详情</p>
+    <div class="jobs">
+      <details open><summary><b>腾讯 TENCENT</b><span>AI 产品实习生</span></summary><p>参与 AI 产品从 0 到 1 的设计与落地。</p><p class="todo">[TODO: 时间、工作内容与量化成果]</p></details>
+      <details><summary><b>蚂蚁集团 ANT GROUP</b><span>AI 风控策略产品实习生</span></summary><p>参与风控策略迭代，基于 AI 优化判断逻辑。</p><p class="todo">[TODO: 时间、工作内容与量化成果]</p></details>
+      <details><summary><b>BILIBILI</b><span>搜索策略产品实习生</span></summary><p>优化搜索策略，提升核心场景转化效率。</p><p class="todo">[TODO: 时间、工作内容与量化成果]</p></details>
+      <details><summary><b>京东 JD</b><span>增长产品运营</span></summary><p>增长侧产品运营，对核心指标负责。</p><p class="todo">[TODO: 时间、工作内容与量化成果]</p></details>
+      <details><summary><b>得物 DEWU</b><span>商家产品实习生</span></summary><p>聚焦商家侧产品体验优化。</p><p class="todo">[TODO: 时间、工作内容与量化成果]</p></details>
+    </div>
+  </template>
+
+  <template id="skills">
+    <div class="skill-groups">
+      <section><h3>CORE SKILLS / 核心技能</h3><div class="skills-list" data-skills="SQL:80,Python:70,AI 工具栈:90"></div></section>
+      <section><h3>PRODUCT / 产品能力</h3><div class="skills-list" data-skills="需求分析:80,用户研究:70,数据分析:90"></div></section>
+      <section><h3>SOFT POWER / 软实力</h3><div class="skills-list" data-skills="抗压能力:95,学习能力:95,自驱力:95,沟通协作:90"></div></section>
+      <section><h3>LANGUAGE / 语言</h3><div class="skills-list" data-skills="中文:100,英文:90"></div></section>
+    </div>
+  </template>
+
+  <template id="qa">
+    <p class="intro">这里有 4 张问题卡片，可能也是你想问我的问题。抽一张吧。</p>
+    <div class="qa-grid">
+      <button class="qa-card" data-card="0"><span>?</span><b>CARD 01</b></button>
+      <button class="qa-card" data-card="1"><span>?</span><b>CARD 02</b></button>
+      <button class="qa-card" data-card="2"><span>?</span><b>CARD 03</b></button>
+      <button class="qa-card" data-card="3"><span>?</span><b>CARD 04</b></button>
+    </div>
+    <div id="qaAnswer" class="qa-answer">SELECT A CARD</div>
+  </template>
+
+  <template id="contact">
+    <div class="contact-grid">
+      <div><p class="eyebrow">SEND A MESSAGE</p><h3>期待与你交流</h3><a class="contact-link" href="mailto:athosiri@163.com">📧 athosiri@163.com</a><a class="contact-link" href="tel:18268173198">📱 18268173198</a><button class="pixel-btn disabled-download" type="button">↓ 下载真实简历 PDF</button><p class="todo">[TODO: 添加简历 PDF 后启用下载]</p></div>
+      <div class="qr-placeholder"><span>WECHAT<br>QR</span><small>[TODO: 微信二维码]</small></div>
+    </div>
+    <div class="note">● 积极找工作中　·　最快 2 周内入职　·　AI 产品经理（应届）</div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
