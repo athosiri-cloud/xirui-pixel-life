@@ -1,5 +1,6 @@
+@font-face{font-family:"GNU Unifont";src:local("Unifont"),url("https://ftp.gnu.org/gnu/unifont/unifont-17.0.04/unifont-17.0.04.otf") format("opentype");font-display:swap}
 @font-face{font-family:"Fusion Pixel SC";src:local("Fusion Pixel 12px Proportional SC"),local("Fusion Pixel 12px Proportional zh_hans"),url("https://cdn.jsdelivr.net/gh/TakWolf/fusion-pixel-font@master/build/ttf/fusion-pixel-12px-proportional-zh_hans.ttf") format("truetype"),url("https://github.com/TakWolf/fusion-pixel-font/releases/download/2026.05.07/fusion-pixel-12px-proportional-zh_hans.ttf") format("truetype");font-display:swap}
-:root{--pink:#d8a9b7;--purple:#c8c2d5;--blue:#86aec4;--dark:#29304a;--yellow:#c99b59;--green:#819681;--text:#3a3a52;--cream:#f5f0e4;--black:#17172d;--mist:#b8cad4;--stone:#b8ad9b;--river:#527f98;--mountain:#49677c;--game-en:"Press Start 2P",monospace;--game-cn:"Fusion Pixel SC","Zpix","ZCOOL QingKe HuangYou","Noto Sans SC",monospace}
+:root{--pink:#d8a9b7;--purple:#c8c2d5;--blue:#86aec4;--dark:#29304a;--yellow:#c99b59;--green:#819681;--text:#3a3a52;--cream:#f5f0e4;--black:#17172d;--mist:#b8cad4;--stone:#b8ad9b;--river:#527f98;--mountain:#49677c;--game-en:"Press Start 2P",monospace;--game-cn:"GNU Unifont","Unifont","Fusion Pixel SC","Zpix","Noto Sans SC",monospace}
 *{box-sizing:border-box;border-radius:0!important;image-rendering:pixelated}
 html,body{margin:0;min-height:100%;font-family:"Inter","Noto Sans SC",sans-serif;color:var(--dark);background:var(--dark);font-size:16px;font-weight:400;line-height:24px}
 button,a{color:inherit}.hidden{display:none!important}.screen{position:fixed;inset:0;overflow:hidden}
@@ -22,3 +23,51 @@ h1{font-family:"Press Start 2P",monospace;line-height:1.5;margin:12px 0}h2{font-
 @media(max-width:1080px){.game-layout{grid-template-columns:340px minmax(0,1fr)}.achievement-badge{grid-template-columns:34px 1fr;gap:5px;padding:5px}.badge-icon{width:32px;height:32px;font-size:15px}.badge-copy b{font-size:14px}.badge-copy small{font-size:11px}.identity strong,.career-goal{font-size:16px}.education-line{font-size:13px}}
 @media(max-width:900px){.game-layout{display:block;padding:10px}.profile{margin-bottom:14px}.profile .avatar{float:left;margin:0 16px 12px 0}.identity{min-height:128px}.profile h3,.profile #internshipQuests,.profile .equipment,.achievement-heading{display:none}.map{min-height:660px}.skill-groups{grid-template-columns:1fr}.topbar span:first-child{display:none}}
 @media(max-width:620px){.visitor-line{font-size:7px}.topbar{font-size:7px;padding:0 6px}.topbar .mini-btn{display:none}.identity{padding:8px}.education-line{font-size:11px}.map-head{display:block}.map-progress{display:none}.map-node{width:80px;height:75px}.map-node span{font-size:22px}.map-node b{font-size:13px}.node-about,.node-work,.node-qa{left:calc(23% - 36px)}.node-education,.node-skills,.node-contact{left:calc(75% - 36px)}.path-top,.path-mid,.path-bottom{left:23%;width:52%}.path-left-a,.path-left-b{left:23%}.path-right-a,.path-right-b{left:75%}.qa-grid{grid-template-columns:1fr 1fr}.qa-card{height:120px}.two-col,.contact-grid{grid-template-columns:1fr}.hero-row{display:block}.big-avatar{margin:auto}.landing-footer{font-size:6px}.modal{padding:8px}.modal-content{padding:12px}}
+
+/* Refined quest status */
+.career-goal{display:flex;align-items:center;gap:9px;margin-top:5px;padding:4px 0;background:transparent;border:0;font-size:17px;animation:none}
+.career-goal:before,.career-goal:after{display:none}
+.career-goal i{position:relative;width:8px;height:8px;background:var(--green);box-shadow:0 8px 0 rgba(129,150,129,.25);animation:status-hop 1.1s steps(2) infinite}
+@keyframes status-hop{0%,50%{transform:translateY(0)}51%,100%{transform:translateY(-5px)}}
+
+/* Five-stop map, with the interview deck as the main destination */
+.path-left-a,.path-right-b{display:none}
+.node-education{left:calc(29% - 51px);top:calc(22% - 36px)}
+.node-work{left:calc(70% - 51px);top:calc(22% - 36px)}
+.node-skills{left:calc(25% - 51px);top:calc(55% - 36px)}
+.node-contact{left:calc(75% - 51px);top:calc(55% - 36px)}
+.node-qa{left:calc(50% - 75px);top:calc(80% - 46px)}
+.node-education:before{content:"01"}.node-work:before{content:"02"}.node-skills:before{content:"03"}.node-qa:before{content:"04"}.node-contact:before{content:"05"}
+.featured-node{width:150px;height:96px;background:var(--cream);border-color:var(--yellow);box-shadow:6px 6px 0 var(--dark)}
+.featured-node small{display:block;margin-top:3px;font-family:var(--game-cn);font-size:13px;line-height:16px;color:#676176}
+
+/* Education */
+.education-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.school-card{position:relative;min-height:180px;padding:20px;background:var(--cream);border:4px solid var(--dark);box-shadow:5px 5px 0 var(--purple)}
+.school-card h3{font-size:23px;margin-top:22px}.school-card p:not(.eyebrow){font-family:var(--game-en);font-size:11px}.school-card b{font-weight:500}
+.school-mark{position:absolute;right:12px;top:12px;color:var(--stone);font-family:var(--game-en);font-size:22px}
+.course-panel{margin-top:20px;padding:18px;border:4px solid var(--dark);background:#e7e1d4;box-shadow:5px 5px 0 var(--blue)}
+.course-chips{display:flex;flex-wrap:wrap;gap:10px}.course-chips span{padding:7px 10px;border:3px solid var(--dark);background:var(--cream);font-family:var(--game-cn);font-size:16px}
+
+/* Internship quest log */
+.quest-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.quest-grid article{position:relative;min-height:112px;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;padding:12px;background:var(--cream);border:4px solid var(--dark);box-shadow:4px 4px 0 var(--purple)}
+.quest-grid article:last-child{grid-column:1/-1}.quest-grid h3{margin:0 0 6px;border:0;padding:0;font-size:19px}.quest-grid p{margin:0;font-size:15px;line-height:22px}
+.quest-grid article>b{align-self:start;padding:2px 5px;color:var(--green);border:2px solid var(--green);font-family:var(--game-en);font-size:7px;line-height:12px}
+.quest-no{display:grid;place-items:center;width:38px;height:38px;background:var(--blue);border:3px solid var(--dark);font-family:var(--game-en);font-size:8px}
+
+/* Interview deck and question box */
+.qa-modal .modal-window{width:min(1180px,96vw);max-height:94vh}.qa-modal .modal-content{max-height:calc(94vh - 64px)}
+.qa-stage{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:20px}
+.card-deck,.question-box{padding:18px;border:4px solid var(--dark);background:#e8e2d7;box-shadow:5px 5px 0 var(--purple)}
+.card-deck h3,.question-box h3{margin-top:3px}
+.qa-grid{grid-template-columns:repeat(4,1fr);gap:12px}
+.qa-card{position:relative;height:210px;padding:12px;background:var(--cream);border:4px solid var(--dark);box-shadow:4px 4px 0 var(--dark);font-family:var(--game-cn);overflow:hidden}
+.qa-card:before{content:"";position:absolute;inset:8px;border:2px solid var(--stone)}.qa-card:hover{transform:translateY(-6px);background:#dfd7c7}.qa-card.read{background:var(--blue)}
+.qa-card span{position:relative;display:block;color:var(--stone);font-family:var(--game-en);font-size:28px}.qa-card b{position:relative;display:block;margin-top:56px;font-family:var(--game-cn);font-size:17px;font-weight:400}
+.qa-answer{margin-top:18px;min-height:112px;background:var(--cream);box-shadow:none}.qa-answer b{display:block;margin-bottom:6px;font-size:19px}
+.question-box p{font-size:14px}.question-box form{display:grid;gap:10px}.question-box input,.question-box textarea{width:100%;border:3px solid var(--dark);background:var(--cream);padding:10px;color:var(--dark);font:400 14px/22px "Inter","Noto Sans SC",sans-serif;outline:none}.question-box textarea{min-height:150px;resize:vertical}.question-box input:focus,.question-box textarea:focus{border-color:var(--river)}
+.question-box .pixel-btn{justify-self:start;background:var(--yellow);font-family:var(--game-cn);font-size:16px}.question-box .pixel-btn:disabled{opacity:.5}.question-box small{font-size:12px;line-height:18px;color:#686477}
+
+@media(max-width:900px){.qa-stage,.education-grid,.quest-grid{grid-template-columns:1fr}.quest-grid article:last-child{grid-column:auto}.qa-grid{grid-template-columns:1fr 1fr}.node-education{left:calc(24% - 51px)}.node-work{left:calc(76% - 51px)}}
+@media(max-width:620px){.career-goal{font-size:14px}.featured-node{width:112px}.node-education,.node-skills{left:calc(23% - 36px)}.node-work,.node-contact{left:calc(75% - 36px)}.node-qa{left:calc(50% - 56px)}.qa-card{height:140px}.qa-card b{margin-top:25px;font-size:14px}}
