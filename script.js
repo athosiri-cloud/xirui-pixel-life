@@ -2,32 +2,147 @@ const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const state = { sound: true, visited: new Set(), avatarHits: 0, keys: [] };
 const messages = ["正在唤醒面试官...", "准备茶水点心...", "整理简历...", "正在拼命包装自己...", "深呼吸，要开始了...", "调整面试微笑..."];
-const titles = { about: "⌂ 关于我 / ABOUT ME", education: "▰ 学习经历 / EDUCATION", work: "▣ 工作经历 / EXPERIENCE", skills: "⚒ 技能树 / SKILL TREE", qa: "? Q&A 抽卡 / DRAW A CARD", contact: "✉ 联系我 / CONTACT" };
-const qaAnswers = [
-  "<b>你最有成就感的一件事？</b><br><span class='todo'>[TODO: 补充一段实习核心项目，包括背景、行动、量化结果与反思]</span>",
-  "<b>你遇到过最大的挑战？</b><br><span class='todo'>[TODO: 补充具体场景、难点、解决思路与沉淀]</span>",
-  "<b>为什么是你？</b><br>跨界背景 + 五段头部公司实习 + 学习与抗压能力。<br><span class='todo'>[TODO: 补充一个证明故事与一句话总结]</span>",
-  ["隐藏技能：可以在经济、金融与 AI 之间快速搭桥。","最近在思考：AI 产品的好体验，应该让技术感消失。","三个国家求学，解锁了适应新环境的高级技能。","Free Talk 彩蛋已触发：聊聊你最近最喜欢的产品吧。"][Math.floor(Math.random()*4)]
+const titles = { education: "▰ 学习经历", work: "▣ 实习副本", skills: "⚒ 技能树", qa: "? 面试抽卡与提问箱", contact: "✉ 联系我" };
+
+/* === Blind-box card deck =====================================
+ * 4 fixed cards + N user-spawned cards.
+ * fixed cards: themed answers; card 03 is hidden-egg with random reply.
+ * user cards: stored in localStorage, also POSTed to my inbox via formsubmit. */
+const FIXED_CARDS = [
+  { id: "fixed-01", question: "做过最「牛」的一个需求是什么？" },
+  { id: "fixed-02", question: "遇到过最困难的一件事是什么？" },
+  { id: "fixed-03", question: "你如何规划你过去的实习路径？" },
+  { id: "fixed-04", question: "为什么你的大部分实习时间都比较短？", hidden: true }
 ];
+
+const USER_CARDS_KEY = "xirui-user-cards";
+function loadUserCards() {
+  try { return JSON.parse(localStorage.getItem(USER_CARDS_KEY) || "[]"); }
+  catch { return []; }
+}
+function saveUserCards(cards) {
+  localStorage.setItem(USER_CARDS_KEY, JSON.stringify(cards));
+}
+
+function cardHTML(card, index, isUser) {
+  const total = FIXED_CARDS.length + (isUser ? loadUserCards().length : 0);
+  const numText = String(index + 1).padStart(2, "0");
+  const isEgg = card.hidden;
+  const cls = ["qa-card"];
+  if (isUser) cls.push("user-card");
+  if (isEgg) cls.push("hidden-egg");
+  const newTag = isUser && card.fresh ? '<span class="card-new">NEW</span>' : "";
+  const delBtn = isUser ? '<button class="card-delete" data-delete="' + card.id + '" title="删除这张卡" aria-label="删除这张卡">×</button>' : "";
+  const mark = isEgg ? "?" : (isUser ? "+" : "♦");
+  const tag = isEgg ? "??? HIDDEN ???" : (isUser ? "VISITOR Q" : "QUESTION");
+  return `<button class="${cls.join(" ")}" data-card-id="${card.id}">
+    ${newTag}${delBtn}
+    <span class="card-mark">${mark}</span>
+    <span class="card-no">${numText}</span>
+    <span class="card-tag">${tag}</span>
+  </button>`;
+}
+
+function renderDeck() {
+  const grid = $("#qaGrid");
+  if (!grid) return;
+  const userCards = loadUserCards();
+  const fixedHTML = FIXED_CARDS.map((c, i) => cardHTML(c, i, false)).join("");
+  const userHTML = userCards.map((c, i) => cardHTML(c, FIXED_CARDS.length + i, true)).join("");
+  grid.innerHTML = fixedHTML + userHTML;
+}
+
+function findCard(id) {
+  const fixed = FIXED_CARDS.find(c => c.id === id);
+  if (fixed) return { card: fixed, isUser: false };
+  const user = loadUserCards().find(c => c.id === id);
+  if (user) return { card: user, isUser: true };
+  return null;
+}
+
+function revealCard(cardEl) {
+  const id = cardEl.dataset.cardId;
+  const found = findCard(id);
+  if (!found) return;
+  const { card, isUser } = found;
+  $$(".qa-card").forEach(el => el.classList.remove("active"));
+  cardEl.classList.add("read", "active");
+
+  const answer = $("#qaAnswer");
+  const tag = isUser
+    ? `<b>访客提问 · ${card.submittedAt ? new Date(card.submittedAt).toLocaleDateString("zh-CN") : ""}</b>`
+    : (card.hidden ? '<b>??? HIDDEN QUESTION ???</b>' : '<b>面试问题</b>');
+  answer.innerHTML = `${tag}<p class="qa-question">${escapeHTML(card.question)}</p>`;
+
+  // clear NEW badge once revealed
+  if (isUser && card.fresh) {
+    const cards = loadUserCards();
+    const target = cards.find(c => c.id === id);
+    if (target) { target.fresh = false; saveUserCards(cards); }
+    cardEl.querySelector(".card-new")?.remove();
+  }
+}
+
+function deleteUserCard(id) {
+  const cards = loadUserCards().filter(c => c.id !== id);
+  saveUserCards(cards);
+  renderDeck();
+  $("#qaAnswer").innerHTML = '<span class="qa-empty">▽ 卡片已撤回</span>';
+  toast("卡片已撤回，卡组又安静了一秒 🌙");
+}
+
+function escapeHTML(str) {
+  return String(str).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+}
+
+function spawnNewCard(question, contact) {
+  const id = "user-" + Date.now() + "-" + Math.floor(Math.random() * 1e6);
+  const cards = loadUserCards();
+  cards.push({
+    id,
+    question: question.trim(),
+    contact: (contact || "").trim(),
+    submittedAt: new Date().toISOString(),
+    fresh: true
+  });
+  saveUserCards(cards);
+  renderDeck();
+  // animate the just-spawned card
+  requestAnimationFrame(() => {
+    const newEl = $(`[data-card-id="${id}"]`);
+    if (newEl) {
+      newEl.classList.add("spawn");
+      newEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+  return id;
+}
+
+/* ============================================================ */
 
 function blocks(value) {
   return `<div class="block-bar">${Array.from({length:10},(_,i)=>`<i class="${i < Math.round(value/10) ? "on" : ""}"></i>`).join("")}</div>`;
 }
 function renderInternships() {
   const internships = [
-    ["①", "腾讯 ima", "AI 产品"],
-    ["②", "蚂蚁国际", "AI 风控策略产品"],
-    ["③", "bilibili", "搜索策略产品"],
-    ["④", "京东", "增长产品运营"],
-    ["⑤", "得物", "商家产品"]
+    ["AI", "腾讯 ima", "AI 产品"],
+    ["盾", "蚂蚁国际", "AI 风控策略"],
+    ["搜", "bilibili", "搜索策略"],
+    ["增", "京东", "增长产品运营"],
+    ["商", "得物", "商家产品"]
   ];
-  $("#internshipQuests").innerHTML = internships.map(([level, company, role]) => `
-    <div class="internship-quest">
-      <div class="quest-line"><b>副本${level}</b><span>${company}</span><i>✓</i></div>
-      <p>${role}</p>
-      <div class="quest-progress"><span></span><span></span><span></span><span></span><span></span></div>
+  $("#internshipQuests").innerHTML = internships.map(([icon, company, role], index) => `
+    <div class="achievement-badge badge-${index + 1}">
+      <span class="badge-icon">${icon}</span>
+      <span class="badge-copy"><b>${company}</b><small>${role}</small></span>
+      <i>CLEAR</i>
     </div>
-  `).join("");
+  `).join("") + `
+    <div class="achievement-badge achievement-total">
+      <span class="badge-icon">荷</span>
+      <span class="badge-copy"><b>荷兰留学工作室</b><small>联合创始人</small></span>
+      <i>FOUNDER</i>
+    </div>`;
 }
 function visitor() {
   let count = Number(localStorage.getItem("xirui-visits") || 36) + 1;
@@ -61,11 +176,13 @@ function fillSkillBars(root) {
   });
 }
 function openModal(id) {
-  state.visited.add(id); $(`[data-modal="${id}"]`).classList.add("visited"); $("#exploredCount").textContent=`${state.visited.size}/6`;
+  state.visited.add(id); $(`[data-modal="${id}"]`).classList.add("visited"); $("#exploredCount").textContent=`${state.visited.size}/5`;
   $("#modalTitle").textContent=titles[id]; const content=$("#modalContent"); content.innerHTML=""; content.append($("#"+id).content.cloneNode(true)); fillSkillBars(content);
+  $("#modal").classList.toggle("qa-modal", id === "qa");
   $("#modal").classList.remove("hidden");
+  if (id === "qa") renderDeck();
 }
-function closeModal(){ $("#modal").classList.add("hidden"); }
+function closeModal(){ $("#modal").classList.add("hidden"); $("#modal").classList.remove("qa-modal"); }
 
 $("#startBtn").addEventListener("click",startGame);
 document.addEventListener("keydown",e=>{
@@ -84,10 +201,50 @@ $("#avatar").addEventListener("click",()=>{
   state.avatarHits++; if(state.avatarHits>=5){state.avatarHits=0;$("#avatar").classList.add("gotcha");toast("别戳了别戳了 (>﹏<)");setTimeout(()=>$("#avatar").classList.remove("gotcha"),1500)}
 });
 $("#treasure").addEventListener("click",()=>{toast("找到我的真实简历啦！但 PDF 还没有放进网站。[TODO: 添加简历文件]",5000);openModal("contact")});
+
+// Card click → reveal; delete-button click → remove user card
 document.addEventListener("click",e=>{
-  const card=e.target.closest(".qa-card"); if(!card)return;
-  card.classList.add("read"); card.querySelector("span").textContent="✓"; $("#qaAnswer").innerHTML=qaAnswers[+card.dataset.card];
+  const delBtn = e.target.closest("[data-delete]");
+  if (delBtn) {
+    e.stopPropagation();
+    const id = delBtn.dataset.delete;
+    if (confirm("确认撤回这张卡片吗？（仅从你的浏览器本地移除，不会撤回已发出的邮件）")) {
+      deleteUserCard(id);
+    }
+    return;
+  }
+  const card = e.target.closest(".qa-card");
+  if (!card) return;
+  revealCard(card);
 });
+
+// Question form → spawn a new card + send to inbox via formsubmit
+document.addEventListener("submit",async e=>{
+  if(e.target.id!=="questionForm")return;
+  e.preventDefault();
+  const form=e.target, status=$("#questionStatus"), button=$("button[type='submit']",form);
+  const entry=Object.fromEntries(new FormData(form).entries());
+  const question = (entry.message || "").trim();
+  if (!question) return;
+
+  // 1) Always spawn locally first — this is the "self-evolution" the user sees.
+  const newId = spawnNewCard(question, entry.contact);
+  $(".question-box")?.classList.add("celebrate");
+  setTimeout(() => $(".question-box")?.classList.remove("celebrate"), 600);
+  toast("🎴 你的问题已加入卡组！", 4000);
+
+  // 2) Best-effort forward to my inbox so I can author a reply later.
+  button.disabled=true; status.textContent="🎴 已生成新卡 · 同步到希蕊邮箱中...";
+  try{
+    const response=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
+    if(!response.ok)throw new Error("send failed");
+    form.reset(); status.textContent="✓ 新卡已就位，问题也送达邮箱了。";
+  }catch(error){
+    form.reset();
+    status.textContent="✓ 新卡已加入卡组（邮件转发暂时失败，但卡片已在你的浏览器本地保存）。";
+  }finally{button.disabled=false}
+});
+
 setInterval(()=>{$("#timeDisplay").textContent=new Date().toLocaleTimeString("zh-CN",{hour12:false})},1000);
 setTimeout(()=>{if(!$("#game").classList.contains("hidden"))toast("您看了这么久，要不直接联系我？")},300000);
 renderInternships(); visitor();
