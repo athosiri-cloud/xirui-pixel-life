@@ -237,3 +237,19 @@ h1{font-family:"Press Start 2P",monospace;line-height:1.5;margin:12px 0}h2{font-
   .map-head h2{font-size:24px;line-height:30px}
   .map{min-height:610px}
 }
+
+/* Keep the complete profile visible on phones */
+@media(max-width:900px){
+  .profile .achievement-heading{display:flex}
+  .profile #internshipQuests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .profile .achievement-badge{height:72px}
+}
+@media(max-width:620px){
+  .achievement-heading{margin-top:12px;padding:7px 10px}
+  .achievement-heading b{font-size:18px;line-height:22px}
+  .profile #internshipQuests{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .profile .achievement-badge{height:66px;grid-template-columns:30px minmax(0,1fr);gap:5px;padding:5px}
+  .profile .badge-icon{width:28px;height:28px;font-size:13px}
+  .profile .badge-copy b{font-size:13px;line-height:18px}
+  .profile .badge-copy small{font-size:11px;line-height:16px}
+}
