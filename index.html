@@ -12,6 +12,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400..700&family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=mobile-20260611-4">
+  <style>
+    @media(max-width:900px){
+      .game{height:auto!important;min-height:100vh!important;overflow:visible!important}
+      .game-layout{display:block!important;height:auto!important;min-height:0!important;padding:10px!important}
+      .profile{height:auto!important;min-height:0!important;overflow:visible!important;margin-bottom:14px!important}
+      .map-wrap{height:auto!important}
+      .profile .achievement-heading{display:flex!important}
+      .profile #internshipQuests{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+      .profile .achievement-badge{height:72px!important}
+    }
+    @media(max-width:620px){
+      .profile,.map-head,.map-node,.next-step-card,.modal-head{font-family:var(--game-cn)!important}
+      .profile{padding:12px!important}
+      .profile .avatar{width:88px!important;height:88px!important;margin:0 12px 10px 0!important}
+      .identity{min-height:0!important;padding:8px!important}
+      .education-line{font-size:13px!important;line-height:20px!important;white-space:normal!important}
+      .profile #internshipQuests{gap:7px!important}
+      .profile .achievement-badge{height:66px!important;grid-template-columns:30px minmax(0,1fr)!important;gap:5px!important;padding:5px!important}
+      .profile .badge-icon{width:28px!important;height:28px!important;font-size:13px!important}
+      .profile .badge-copy b{font-size:13px!important;line-height:18px!important}
+      .profile .badge-copy small{font-size:11px!important;line-height:16px!important}
+    }
+  </style>
 </head>
 <body>
   <div id="toast" class="toast" role="status"></div>
