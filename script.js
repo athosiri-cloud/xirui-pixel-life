@@ -13,14 +13,26 @@ const qaAnswers = [
 function blocks(value) {
   return `<div class="block-bar">${Array.from({length:10},(_,i)=>`<i class="${i < Math.round(value/10) ? "on" : ""}"></i>`).join("")}</div>`;
 }
-function renderStats() {
-  const stats = [["沟通力",90],["创造力",90],["抗压力",95],["学习力",95]];
-  $("#profileStats").innerHTML = stats.map(([name,value])=>`<div class="stat-row"><div class="stat-label"><span>${name}</span><b>${value}%</b></div>${blocks(value)}</div>`).join("");
+function renderInternships() {
+  const internships = [
+    ["①", "腾讯 ima", "AI 产品"],
+    ["②", "蚂蚁国际", "AI 风控策略产品"],
+    ["③", "bilibili", "搜索策略产品"],
+    ["④", "京东", "增长产品运营"],
+    ["⑤", "得物", "商家产品"]
+  ];
+  $("#internshipQuests").innerHTML = internships.map(([level, company, role]) => `
+    <div class="internship-quest">
+      <div class="quest-line"><b>副本${level}</b><span>${company}</span><i>✓</i></div>
+      <p>${role}</p>
+      <div class="quest-progress"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  `).join("");
 }
 function visitor() {
   let count = Number(localStorage.getItem("xirui-visits") || 36) + 1;
   localStorage.setItem("xirui-visits", count);
-  $("#landingVisitor").textContent = `YOU ARE VISITOR #${String(count).padStart(3,"0")} · 你是第 ${count} 位访客`;
+  $("#landingVisitor").textContent = `YOU ARE VISITOR #${String(count).padStart(3,"0")}`;
   $("#visitorDisplay").textContent = `VISITOR #${String(count).padStart(3,"0")}`;
 }
 function toast(text, duration=3500) {
@@ -78,4 +90,4 @@ document.addEventListener("click",e=>{
 });
 setInterval(()=>{$("#timeDisplay").textContent=new Date().toLocaleTimeString("zh-CN",{hour12:false})},1000);
 setTimeout(()=>{if(!$("#game").classList.contains("hidden"))toast("您看了这么久，要不直接联系我？")},300000);
-renderStats(); visitor();
+renderInternships(); visitor();
