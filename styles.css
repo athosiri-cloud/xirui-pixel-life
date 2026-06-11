@@ -1,6 +1,6 @@
 @font-face{font-family:"GNU Unifont";src:local("Unifont"),url("https://ftp.gnu.org/gnu/unifont/unifont-17.0.04/unifont-17.0.04.otf") format("opentype");font-display:swap}
 @font-face{font-family:"Fusion Pixel SC";src:local("Fusion Pixel 12px Proportional SC"),local("Fusion Pixel 12px Proportional zh_hans"),url("https://cdn.jsdelivr.net/gh/TakWolf/fusion-pixel-font@master/build/ttf/fusion-pixel-12px-proportional-zh_hans.ttf") format("truetype"),url("https://github.com/TakWolf/fusion-pixel-font/releases/download/2026.05.07/fusion-pixel-12px-proportional-zh_hans.ttf") format("truetype");font-display:swap}
-:root{--pink:#d8a9b7;--purple:#c8c2d5;--blue:#86aec4;--dark:#29304a;--yellow:#c99b59;--green:#819681;--text:#3a3a52;--cream:#f5f0e4;--black:#17172d;--mist:#b8cad4;--stone:#b8ad9b;--river:#527f98;--mountain:#49677c;--game-en:"Press Start 2P",monospace;--game-cn:"GNU Unifont","Unifont","Fusion Pixel SC","Zpix","Noto Sans SC",monospace}
+:root{--pink:#d8a9b7;--purple:#c8c2d5;--blue:#86aec4;--dark:#29304a;--yellow:#c99b59;--green:#819681;--text:#3a3a52;--cream:#f5f0e4;--black:#17172d;--mist:#b8cad4;--stone:#b8ad9b;--river:#527f98;--mountain:#49677c;--game-en:"Press Start 2P",monospace;--game-cn:"GNU Unifont","Unifont","Fusion Pixel SC","ZCOOL QingKe HuangYou","Zpix","Noto Sans SC",monospace}
 *{box-sizing:border-box;border-radius:0!important;image-rendering:pixelated}
 html,body{margin:0;min-height:100%;font-family:"Inter","Noto Sans SC",sans-serif;color:var(--dark);background:var(--dark);font-size:16px;font-weight:400;line-height:24px}
 button,a{color:inherit}.hidden{display:none!important}.screen{position:fixed;inset:0;overflow:hidden}
@@ -213,3 +213,27 @@ h1{font-family:"Press Start 2P",monospace;line-height:1.5;margin:12px 0}h2{font-
 
 @media(max-width:900px){.qa-stage,.education-grid,.quest-grid{grid-template-columns:1fr}.quest-grid article:last-child{grid-column:auto}.qa-grid{grid-template-columns:repeat(2,1fr)}.node-education{left:calc(24% - 51px)}.node-work{left:calc(76% - 51px)}}
 @media(max-width:620px){.career-goal{font-size:14px}.featured-node{width:112px}.node-education,.node-skills{left:calc(23% - 36px)}.node-work,.node-contact{left:calc(75% - 36px)}.node-qa{left:calc(50% - 56px)}.qa-card{height:150px}.qa-card .card-no{margin-top:24px;font-size:28px}.qa-card .card-tag{margin-top:8px}}
+
+/* Mobile portrait layout: compact profile, then map */
+@media(max-width:900px){
+  .game{min-height:100vh;height:auto;overflow:visible}
+  .game-layout{display:block;height:auto;min-height:0;padding:10px}
+  .profile{height:auto;min-height:0;margin-bottom:14px;overflow:visible}
+  .map-wrap{height:auto}
+  .map{min-height:660px}
+}
+@media(max-width:620px){
+  .profile,.map-head,.map-node,.next-step-card,.modal-head{font-family:var(--game-cn)}
+  .profile{padding:12px}
+  .card-title{margin:-12px -12px 12px}
+  .profile .avatar{float:left;width:88px;height:88px;margin:0 12px 10px 0}
+  .identity{min-height:0;gap:2px;padding:8px}
+  .identity strong{font-size:17px;line-height:22px}
+  .education-line{font-size:13px;line-height:20px;white-space:normal}
+  .player-level{font-size:8px;line-height:16px}
+  .next-step-card{clear:both;margin-top:12px;padding:8px 10px}
+  .next-step-card .career-goal{font-size:16px;line-height:22px}
+  .map-head{min-height:0;padding:10px 12px}
+  .map-head h2{font-size:24px;line-height:30px}
+  .map{min-height:610px}
+}
