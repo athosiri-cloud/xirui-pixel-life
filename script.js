@@ -15,19 +15,23 @@ function blocks(value) {
 }
 function renderInternships() {
   const internships = [
-    ["①", "腾讯 ima", "AI 产品"],
-    ["②", "蚂蚁国际", "AI 风控策略产品"],
-    ["③", "bilibili", "搜索策略产品"],
-    ["④", "京东", "增长产品运营"],
-    ["⑤", "得物", "商家产品"]
+    ["AI", "腾讯 ima", "AI 产品"],
+    ["盾", "蚂蚁国际", "AI 风控策略"],
+    ["搜", "bilibili", "搜索策略"],
+    ["增", "京东", "增长产品运营"],
+    ["商", "得物", "商家产品"]
   ];
-  $("#internshipQuests").innerHTML = internships.map(([level, company, role]) => `
-    <div class="internship-quest">
-      <div class="quest-line"><b>副本${level}</b><span>${company}</span><i>✓</i></div>
-      <p>${role}</p>
-      <div class="quest-progress"><span></span><span></span><span></span><span></span><span></span></div>
+  $("#internshipQuests").innerHTML = internships.map(([icon, company, role], index) => `
+    <div class="achievement-badge badge-${index + 1}">
+      <span class="badge-icon">${icon}</span>
+      <span class="badge-copy"><b>${company}</b><small>${role}</small></span>
+      <i>CLEAR</i>
     </div>
-  `).join("");
+  `).join("") + `
+    <div class="achievement-badge achievement-total">
+      <span class="badge-icon">★</span>
+      <span class="badge-copy"><b>ALL CLEAR</b><small>五段副本已解锁</small></span>
+    </div>`;
 }
 function visitor() {
   let count = Number(localStorage.getItem("xirui-visits") || 36) + 1;
