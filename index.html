@@ -73,12 +73,18 @@
       <main class="map-wrap">
         <div class="map-head">
           <div>
-            <p class="eyebrow">WORLD 01</p>
-            <h2>XIRUI'S CAREER MAP</h2>
+            <p class="eyebrow">CAMBRIDGE · EUROPE · AI</p>
+            <h2>希蕊的旅程地图</h2>
           </div>
-          <div class="map-progress">EXPLORED <strong id="exploredCount">0/6</strong></div>
+          <div class="map-progress">已探索 <strong id="exploredCount">0/6</strong></div>
         </div>
         <div class="map" id="map">
+          <div class="map-sky" aria-hidden="true"></div>
+          <div class="map-mountains" aria-hidden="true"></div>
+          <div class="map-campus" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="map-lawn" aria-hidden="true"></div>
           <div class="river river-a"></div><div class="river river-b"></div>
           <div class="path path-top"></div><div class="path path-mid"></div><div class="path path-bottom"></div>
           <div class="path path-left-a"></div><div class="path path-left-b"></div>
@@ -90,7 +96,7 @@
           <button class="map-node node-qa" data-modal="qa"><span>?</span><b>Q&A 抽卡</b></button>
           <button class="map-node node-contact" data-modal="contact"><span>✉</span><b>联系我</b></button>
           <button id="treasure" class="treasure" aria-label="隐藏的简历宝箱">▣</button>
-          <div class="map-legend">SELECT A LOCATION TO EXPLORE</div>
+          <div class="map-legend">选择一站，继续探索</div>
         </div>
       </main>
     </div>
