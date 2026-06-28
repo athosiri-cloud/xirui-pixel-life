@@ -200,7 +200,7 @@ $("#soundBtn").addEventListener("click",()=>{state.sound=!state.sound;$("#soundB
 $("#avatar").addEventListener("click",()=>{
   state.avatarHits++; if(state.avatarHits>=5){state.avatarHits=0;$("#avatar").classList.add("gotcha");toast("别戳了别戳了 (>﹏<)");setTimeout(()=>$("#avatar").classList.remove("gotcha"),1500)}
 });
-$("#treasure").addEventListener("click",()=>{toast("找到我的真实简历啦！但 PDF 还没有放进网站。[TODO: 添加简历文件]",5000);openModal("contact")});
+$("#treasure").addEventListener("click",()=>{toast("✦ 你发现了隐藏宝箱！里面藏着小左的联系方式 ✉",5000);openModal("contact")});
 
 // Card click → reveal; delete-button click → remove user card
 document.addEventListener("click",e=>{
