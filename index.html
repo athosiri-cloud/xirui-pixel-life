@@ -24,9 +24,20 @@
       <p class="key-hint">CLICK / ENTER / SPACE</p>
     </div>
     <div class="city" aria-hidden="true">
-      <div class="building b1"></div><div class="building b2"></div>
-      <div class="building b3"></div><div class="building b4"></div>
-      <div class="building b5"></div><div class="building b6"></div>
+      <div class="skyline">
+        <div class="house h1"></div>
+        <div class="house h2 chimney"></div>
+        <div class="house h3 chapel"><i></i><i></i></div>
+        <div class="house h4 chimney"></div>
+        <div class="house h5"></div>
+        <div class="house h6"></div>
+      </div>
+      <div class="cam-river"></div>
+      <div class="cam-punt">
+        <div class="punt-pole"></div>
+        <div class="punter"></div>
+        <div class="boat"></div>
+      </div>
     </div>
     <div class="landing-footer">© 2026 ZUO XIRUI · MADE WITH ♥ & PRODUCT THINKING</div>
   </section>
@@ -59,7 +70,6 @@
           <strong>左希蕊 / XIRUI</strong>
           <span class="education-line"><i>▰</i> 剑桥大学 硕士</span>
           <span class="education-line"><i>▰</i> 阿姆斯特丹大学 本科</span>
-          <span class="career-goal"><i></i>秋招副本开启中</span>
           <span class="player-level">LV.23 · INTJ</span>
         </div>
 
@@ -68,6 +78,11 @@
           <span><b>副本战绩</b><small>5 / 5 CLEARED</small></span>
         </div>
         <div id="internshipQuests"></div>
+
+        <div class="next-step-card">
+          <span class="next-step-label">▶ NEXT QUEST</span>
+          <span class="career-goal"><i></i>秋招副本开启中</span>
+        </div>
       </aside>
 
       <main class="map-wrap">
@@ -113,56 +128,53 @@
 
   <template id="education">
     <div class="education-grid">
-      <article class="school-card"><span class="school-mark">01</span><p class="eyebrow">CURRENT SAVE</p><h3>剑桥大学 · 硕士</h3><p>2025.10 — 2027.04</p><b>University of Cambridge</b></article>
-      <article class="school-card"><span class="school-mark">02</span><p class="eyebrow">CLEARED</p><h3>阿姆斯特丹大学 · 本科</h3><p>2022.09 — 2025.08</p><b>University of Amsterdam</b></article>
+      <article class="school-card school-cambridge"><span class="school-mark">01</span><p class="eyebrow">CURRENT SAVE</p><h3>剑桥大学 · 硕士</h3><p class="school-date">2025.09 — 2026.11</p><p class="school-major">房地产金融</p><b>UNIVERSITY OF CAMBRIDGE</b><span class="school-flag">UK</span></article>
+      <article class="school-card school-amsterdam"><span class="school-mark">02</span><p class="eyebrow">CLEARED · HONORS</p><h3>阿姆斯特丹大学 · 本科</h3><p class="school-date">2022.09 — 2025.08</p><p class="school-major">经济学 · GPA 8.3 · 专业前 1%</p><b>UNIVERSITY OF AMSTERDAM</b><span class="school-flag">NL</span></article>
     </div>
-    <section class="course-panel"><p class="eyebrow">SKILL ITEMS ACQUIRED</p><h3>关键课程</h3><div class="course-chips"><span>计量经济学</span><span>空间建模</span><span>机器学习</span><span>线性代数</span><span>Python 编程</span></div></section>
+    <section class="course-panel"><p class="eyebrow">SKILL ITEMS ACQUIRED</p><h3>关键课程</h3><div class="course-chips"><span>计量经济学</span><span>行为经济学</span><span>统计建模</span><span>因果推断</span><span>机器学习</span><span>Python / R / SPSS</span></div></section>
   </template>
 
   <template id="work">
-    <p class="intro">五段产品副本，每一关只保留一个最值得被记住的成果。</p>
+    <p class="intro">五段产品副本，每一关只露一个最值得被记住的成果数字。</p>
     <div class="quest-grid">
-      <article><span class="quest-no">01</span><div><h3>腾讯 · AI 产品</h3><p>知识图谱、讨论组 AI 功能设计</p></div><b>CLEAR</b></article>
-      <article><span class="quest-no">02</span><div><h3>蚂蚁集团 · AI 风控</h3><p>内部提效 AI 风控平台</p></div><b>CLEAR</b></article>
-      <article><span class="quest-no">03</span><div><h3>bilibili · 搜索策略</h3><p>搜索结果页封面改版 A/B 实验</p></div><b>CLEAR</b></article>
-      <article><span class="quest-no">04</span><div><h3>京东 · 增长产品</h3><p>裂变红包系统 + AI 客服机器人</p></div><b>CLEAR</b></article>
-      <article><span class="quest-no">05</span><div><h3>得物 · 商家产品</h3><p>商家后台功能设计 + 订单流转链路重构</p></div><b>CLEAR</b></article>
+      <details class="quest-card quest-1"><summary><span class="quest-no">01</span><div class="quest-head"><h3>腾讯 ima · AI 产品</h3><p>知识库 + Copilot · UV +46%</p></div><b>CLEAR</b><span class="quest-arrow">▾</span></summary><div class="quest-body"><p>主导 7+ 知识库核心功能从调研到上线全流程，评审通过率 100%。上线一个半月 UV 从 11 万涨到 16 万（+46%），PC 端渗透率 50% → 65%。同时探索 AI Agent 在知识管理场景的落地方向。</p><p class="quest-tease">⊹ 欲知更多副本细节，欢迎给小左一个面试机会，咱们当面唠 ☕</p></div></details>
+      <details class="quest-card quest-2"><summary><span class="quest-no">02</span><div class="quest-head"><h3>蚂蚁国际 · AI 风控</h3><p>海外商家治理 · 准确率 92%</p></div><b>CLEAR</b><span class="quest-arrow">▾</span></summary><div class="quest-body"><p>负责 A+ 钱包海外商家风险治理，独立构建 AI 辅助识别框架，巡检商户 1500+ 家，精准推动关停 20+ 高风险主体，规则准确率 92%。同时参与内部 AI 风控运营平台从 0 到 1 建设，运营排查效率 +30%。</p><p class="quest-tease">⊹ 这一段故事还挺有意思的，留点悬念给面试现场吧～</p></div></details>
+      <details class="quest-card quest-3"><summary><span class="quest-no">03</span><div class="quest-head"><h3>bilibili · 搜索策略</h3><p>封面改版 · CTR +1.94%</p></div><b>CLEAR</b><span class="quest-arrow">▾</span></summary><div class="quest-body"><p>主导搜索结果页视频封面 16:9 → 4:3 改版，完整跑通方案设计、A/B 实验搭建到效果评估。最终搜索 CTR +1.94%，同时识别出结果点击 UV 的负向信号，输出分层（新/老客）差异化优化策略。</p><p class="quest-tease">⊹ 想看具体的实验设计和数据洞察？面试桌上见 ✨</p></div></details>
+      <details class="quest-card quest-4"><summary><span class="quest-no">04</span><div class="quest-head"><h3>京东 · 增长产品</h3><p>看赚红包 + AI 客服 SOP</p></div><b>CLEAR</b><span class="quest-arrow">▾</span></summary><div class="quest-body"><p>同时推进三件事：搭建 AI 客服意图识别 + 100+ 高频问题分级 SOP，常见客诉自动处理；设计「看赚红包」用户参与全链路，提升「逛」频道 DAU；用规则引擎 + 聚类识别薅羊毛黑产账号，支持风控团队精准拦截。</p><p class="quest-tease">⊹ 详细的玩法机制和 AI 对话设计，给我个面试邀约我现场拆给你看 🎮</p></div></details>
+      <details class="quest-card quest-5"><summary><span class="quest-no">05</span><div class="quest-head"><h3>得物 · 商家产品</h3><p>订单链路 · 预计 GMV +54.8 万/月</p></div><b>CLEAR</b><span class="quest-arrow">▾</span></summary><div class="quest-body"><p>独立负责国际商家「订单主动取消」功能从调研到上线，构建合理罚款分层机制，补单率 +5%，预计带动 GMV 增量最大 54.8 万元/月。同时基于 SQL 重构归因体系，主导补单挽回链路，用精准外呼名单驱动转化提升。</p><p class="quest-tease">⊹ 这段重构里有不少踩坑和决策，留到面试当面分享更精彩 💼</p></div></details>
     </div>
   </template>
 
   <template id="skills">
     <div class="skill-groups">
-      <section><h3>CORE SKILLS / 核心技能</h3><div class="skills-list" data-skills="SQL:80,Python:70,AI 工具栈:90"></div></section>
-      <section><h3>PRODUCT / 产品能力</h3><div class="skills-list" data-skills="需求分析:80,用户研究:70,数据分析:90"></div></section>
-      <section><h3>SOFT POWER / 软实力</h3><div class="skills-list" data-skills="抗压能力:95,学习能力:95,自驱力:95,沟通协作:90"></div></section>
-      <section><h3>LANGUAGE / 语言</h3><div class="skills-list" data-skills="中文:100,英文:90"></div></section>
+      <section><h3>AI &amp; 数据 / DATA STACK</h3><div class="skills-list" data-skills="Prompt Engineering:90,SQL:80,Python / R / SPSS:70,ChatGPT / Claude / Cursor:90"></div></section>
+      <section><h3>PRODUCT / 产品能力</h3><div class="skills-list" data-skills="需求分析与 PRD/BRD:90,用户研究:75,A/B 实验与数据分析:85,Axure / Figma:85"></div></section>
+      <section><h3>SOFT POWER / 软实力</h3><div class="skills-list" data-skills="抗压能力:95,学习能力:95,自驱力:95,跨文化协作:90"></div></section>
+      <section><h3>LANGUAGE / 语言</h3><div class="skills-list" data-skills="中文:100,英文 (四年欧洲):90"></div></section>
     </div>
   </template>
 
   <template id="qa">
     <div class="qa-stage">
       <section class="card-deck">
-        <p class="eyebrow">INTERVIEW CARD DECK</p>
+        <p class="eyebrow">INTERVIEW · BLIND BOX DECK</p>
         <h3>抽一张面试问题卡</h3>
-        <div class="qa-grid">
-          <button class="qa-card" data-card="0"><span>01</span><b>成就时刻</b></button>
-          <button class="qa-card" data-card="1"><span>02</span><b>困难副本</b></button>
-          <button class="qa-card" data-card="2"><span>03</span><b>为什么是我</b></button>
-          <button class="qa-card" data-card="3"><span>04</span><b>隐藏彩蛋</b></button>
+        <p class="deck-hint">点击卡牌揭晓问题 · 卡组会随访客提问而生长</p>
+        <div class="qa-grid" id="qaGrid"></div>
+        <div id="qaAnswer" class="qa-answer">
+          <span class="qa-empty">▽ 请点击上方任意一张卡牌</span>
         </div>
-        <div id="qaAnswer" class="qa-answer">请选择一张卡牌</div>
       </section>
       <section class="question-box">
-        <p class="eyebrow">QUESTION BOX</p>
-        <h3>面试官提问箱</h3>
-        <p>留下你对简历的问题或反馈，我会在邮箱中收到。</p>
+        <p class="eyebrow">+ ADD A CARD</p>
+        <h3>把你的问题加入卡组</h3>
+        <p class="qb-tagline">每一个提问，都会变成一张新卡牌 🎴</p>
         <form id="questionForm" action="https://formsubmit.co/ajax/athosiri@163.com" method="POST">
-          <input name="name" type="text" maxlength="40" placeholder="怎么称呼你？（选填）">
-          <input name="contact" type="text" maxlength="80" placeholder="联系方式（选填）">
-          <textarea name="message" maxlength="800" required placeholder="写下你的问题或反馈..."></textarea>
+          <textarea name="message" maxlength="500" required placeholder="想问点什么？例如：你最看重团队的什么特质？"></textarea>
+          <input name="contact" type="text" maxlength="80" placeholder="联系方式（选填，方便我回复你）">
           <input type="hidden" name="_subject" value="来自左希蕊像素简历的新问题">
-          <button class="pixel-btn" type="submit">投递问题</button>
-          <small id="questionStatus">问题将发送至我的收件箱</small>
+          <button class="pixel-btn" type="submit">+ 加入卡组</button>
+          <small id="questionStatus">提交后会立刻生成一张新卡</small>
         </form>
       </section>
     </div>
@@ -170,10 +182,20 @@
 
   <template id="contact">
     <div class="contact-grid">
-      <div><p class="eyebrow">SEND A MESSAGE</p><h3>期待与你交流</h3><a class="contact-link" href="mailto:athosiri@163.com">📧 athosiri@163.com</a><a class="contact-link" href="tel:18268173198">📱 18268173198</a><button class="pixel-btn disabled-download" type="button">↓ 下载真实简历 PDF</button><p class="todo">[TODO: 添加简历 PDF 后启用下载]</p></div>
-      <div class="qr-placeholder"><span>WECHAT<br>QR</span><small>[TODO: 微信二维码]</small></div>
+      <div>
+        <p class="eyebrow">SEND A MESSAGE</p>
+        <h3>来跟小左唠两句 ☕</h3>
+        <a class="contact-link" href="mailto:athosiri@163.com">📧 athosiri@163.com</a>
+        <a class="contact-link" href="tel:18268173198">📱 18268173198</a>
+      </div>
+      <div class="resume-note">
+        <p class="eyebrow">CUSTOMIZED RESUME</p>
+        <h3>私戳小左 · 获取专属简历 ✦</h3>
+        <p>每家公司都值得一份量身定制的简历，所以这里就不放通用版啦～</p>
+        <p>欢迎面试官大人 / HR 大人推荐合适岗位，告诉我你正在招聘的方向，我会发给你一份针对该方向重点呈现的简历版本 ✉</p>
+      </div>
     </div>
-    <div class="note">目标方向：AI 产品经理（应届）</div>
+    <div class="note">目标方向：AI 产品经理（应届）· 同时考虑增长 / 商家 / 海外业务方向</div>
   </template>
 
   <script src="script.js"></script>
